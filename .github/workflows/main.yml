@@ -23,7 +23,7 @@ jobs:
 
       - name: Build with MSVC (C++20)
         run: |
-          cl /std:c++20 /EHsc /O2 /W4 /permissive- main.cpp /Fe:hash_generator.exe
+          cl /std:c++20 /EHsc /O2 /W4 /permissive- create.cpp /Fe:hash_generator.exe
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
