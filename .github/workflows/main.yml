@@ -1,0 +1,32 @@
+name: MSVC Build (Windows)
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build:
+    runs-on: windows-2022   # Windows Server 2022 (Win10/11 compatible toolchain)
+
+    strategy:
+      matrix:
+        config: [Release]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup MSVC Developer Command Prompt
+        uses: ilammy/msvc-dev-cmd@v1
+
+      - name: Build with MSVC (C++20)
+        run: |
+          cl /std:c++20 /EHsc /O2 /W4 /permissive- main.cpp /Fe:hash_generator.exe
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: hash_generator-${{ matrix.config }}
+          path: hash_generator.exe
